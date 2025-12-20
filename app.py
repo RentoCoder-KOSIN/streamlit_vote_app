@@ -7,11 +7,24 @@ import secrets
 
 # shared helper
 import lib
+from pathlib import Path
+import streamlit as st
+
+st.set_page_config(
+    page_title="投票システム",
+    page_icon="assets/icon.png",
+    layout="wide"
+)
+
+BASE_DIR = Path(__file__).parent
+DATA_DIR = BASE_DIR / "data"
+
+DATA_FILE = DATA_DIR / "votes.csv"
+
 
 # 初期化
 lib.init_files()
 
-DATA_FILE = 'votes.csv'
 
 # 初期CSVにタイムスタンプ列を追加
 if not os.path.exists(DATA_FILE):

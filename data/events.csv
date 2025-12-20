@@ -1,0 +1,11 @@
+timestamp,level,event,details
+2025-12-20T19:28:11.528088,INFO,save_codes,rows=2
+2025-12-20T19:28:11.531084,INFO,generate_codes,created=2
+2025-12-20T19:28:20.285891,INFO,verify_code_ok,code=sf0L****
+2025-12-20T19:28:20.295624,INFO,save_votes,rows=1
+2025-12-20T19:28:20.314958,INFO,save_codes,rows=2
+2025-12-20T19:28:20.318155,INFO,mark_code_used,code=sf0L**** used_by=sf0L7WUh
+2025-12-20T19:28:39.381246,INFO,verify_code_ok,code=p2dJ****
+2025-12-20T19:28:39.388851,INFO,save_votes,rows=2
+2025-12-20T19:28:39.400668,INFO,save_codes,rows=2
+2025-12-20T19:28:39.403086,INFO,mark_code_used,code=p2dJ**** used_by=p2dJuPDE

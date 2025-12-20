@@ -10,16 +10,23 @@ import hashlib
 import logging
 import csv
 from typing import Any
+from pathlib import Path
 
-DATA_FILE = 'votes.csv'
-CODES_FILE = 'codes.csv'
-SETTINGS_FILE = 'settings.json'
-AUTH_FILE = 'auth.json'
-ELIGIBLE_FILE = 'eligible_ids.csv'
 
-LOG_FILE = 'app.log'
-EVENTS_FILE = 'events.csv' 
-MAIL_FILE = 'mail.log'
+BASE_DIR = Path(__file__).resolve().parent
+os.chdir(BASE_DIR)
+DATA_DIR = BASE_DIR / "data"
+DATA_DIR.mkdir(exist_ok=True)
+
+DATA_FILE = DATA_DIR / 'votes.csv'
+CODES_FILE = DATA_DIR / 'codes.csv'
+SETTINGS_FILE = DATA_DIR / 'settings.json'
+AUTH_FILE = DATA_DIR / 'auth.json'
+ELIGIBLE_FILE = DATA_DIR / 'eligible_ids.csv'
+
+LOG_FILE = DATA_DIR / 'app.log'
+EVENTS_FILE = DATA_DIR / 'events.csv'
+MAIL_FILE = DATA_DIR / 'mail.log'
 
 
 def init_files():
