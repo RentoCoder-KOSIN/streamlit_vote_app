@@ -14,16 +14,32 @@ def send_mail(to_addr, subject, body):
     FROM_ADDR = os.environ.get("MAIL_ADDRESS")
     PASSWORD = os.environ.get("MAIL_PASSWORD")
 
+    # Log attempt (mask emails)
+    try:
+        lib.log_event('INFO', 'send_mail_attempt', f"to={lib.mask(to_addr)} from={lib.mask(FROM_ADDR)} subject={subject}")
+    except Exception:
+        # If logging fails, continue but don't block sending
+        pass
+
+    if not FROM_ADDR or not PASSWORD:
+        lib.log_event('ERROR', 'send_mail_failed', 'missing SMTP credentials')
+        raise ValueError('メール設定が不完全です: MAIL_ADDRESS または MAIL_PASSWORD が設定されていません')
+
     msg = MIMEMultipart()
     msg['From'] = FROM_ADDR
     msg['To'] = to_addr
     msg['Subject'] = subject
     msg.attach(MIMEText(body, 'plain'))
 
-    with smtplib.SMTP(SMTP_SERVER, SMTP_PORT) as server:
-        server.starttls()
-        server.login(FROM_ADDR, PASSWORD)
-        server.send_message(msg)
+    try:
+        with smtplib.SMTP(SMTP_SERVER, SMTP_PORT) as server:
+            server.starttls()
+            server.login(FROM_ADDR, PASSWORD)
+            server.send_message(msg)
+        lib.log_event('INFO', 'send_mail_sent', f"to={lib.mask(to_addr)} subject={subject}")
+    except Exception as e:
+        lib.log_event('ERROR', 'send_mail_failed', f"to={lib.mask(to_addr)} from={lib.mask(FROM_ADDR)} error={e}")
+        raise
 
 lib.init_files()
 
