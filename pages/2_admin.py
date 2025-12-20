@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import lib
+from login import *
 
 lib.init_files()
 
@@ -10,14 +11,7 @@ if 'admin_authenticated' not in st.session_state:
 st.title('管理者ダッシュボード')
 
 # 認証
-if not st.session_state['admin_authenticated']:
-    pw = st.text_input('管理者パスワード', type='password')
-    if st.button('ログイン'):
-        if lib.verify_password(pw, lib.get_password_hash()):
-            st.session_state['admin_authenticated'] = True
-            st.success('認証成功')
-        else:
-            st.error('パスワードが違います')
+login()
 
 if st.session_state['admin_authenticated']:
     st.subheader('集計結果')
