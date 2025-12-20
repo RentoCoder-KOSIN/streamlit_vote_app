@@ -85,7 +85,11 @@ if mode == "投票":
 
 # --- 管理者画面（パスワード保護 + セッション） ---
 else:
-    ADMIN_PASSWORD = os.environ.get("ADMIN_PASSWORD", "admin123")
+    ADMIN_PASSWORD = os.environ.get("ADMIN_PASSWORD")
+
+    if not ADMIN_PASSWORD:
+        st.error("管理者パスワードが設定されていません")
+        st.stop()
 
     if not st.session_state['admin_authenticated']:
         admin_password = st.text_input("管理者パスワードを入力", type="password")
